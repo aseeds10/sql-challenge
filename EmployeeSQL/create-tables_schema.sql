@@ -1,3 +1,15 @@
+--Drop schema due to FKs
+--find what my schema is
+SELECT table_schema
+FROM information_schema.tables
+WHERE table_name = 'departments';
+
+--drop that schema
+DROP SCHEMA IF EXISTS public CASCADE;
+
+-- Create a new schema named 'new_schema'
+CREATE SCHEMA public;
+
 -- Drop table if exists
 DROP TABLE IF EXISTS departments;
 DROP TABLE IF EXISTS dept_emp;
@@ -8,39 +20,47 @@ DROP TABLE IF EXISTS titles;
 
 -- Create new table
 CREATE TABLE departments (
-dept_no VARCHAR,
-dept_name VARCHAR
+dept_no VARCHAR(20) PRIMARY KEY,
+dept_name VARCHAR(30)
+);
+
+CREATE TABLE titles (
+title_id VARCHAR(40) PRIMARY KEY,
+title VARCHAR(40)
+);
+
+CREATE TABLE employees (
+emp_no int PRIMARY KEY,
+emp_title VARCHAR(40),
+birth_date date,
+first_name VARCHAR(30),
+last_name VARCHAR(30),
+sex CHAR(1),
+hire_date date,
+FOREIGN KEY (emp_title) REFERENCES titles(title_id)
 );
 
 CREATE TABLE dept_emp (
 emp_no int,
-dept_no VARCHAR
+dept_no VARCHAR(20),
+FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
 );
 
 CREATE TABLE dept_manager (
-dept_no VARCHAR,
-emp_no int
+dept_no VARCHAR(20),
+emp_no int,
+FOREIGN KEY (dept_no) REFERENCES departments(dept_no),
+FOREIGN KEY (emp_no) REFERENCES dept_emp(emp_no)
 );
 
-CREATE TABLE employees (
-emp_no int,
-emp_title VARCHAR,
-birth_date date,
-first_name VARCHAR,
-last_name VARCHAR,
-sex VARCHAR,
-hire_date date
-);
 
 CREATE TABLE salaries (
+salary_id SERIAL PRIMARY KEY,
 emp_no int,
-salary int
+salary int,
+FOREIGN KEY (emp_no) REFERENCES dept_emp(emp_no)
 );
 
-CREATE TABLE titles (
-title_id VARCHAR,
-title VARCHAR
-);
 
 -- View table columns and datatypes
 SELECT * FROM departments;
