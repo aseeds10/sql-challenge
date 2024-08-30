@@ -43,6 +43,7 @@ FOREIGN KEY (emp_title) REFERENCES titles(title_id)
 CREATE TABLE dept_emp (
 emp_no int,
 dept_no VARCHAR(20),
+PRIMARY KEY(emp_no,dept_no),
 FOREIGN KEY (dept_no) REFERENCES departments(dept_no),
 FOREIGN KEY (emp_no) REFERENCES employees(emp_no)
 );
@@ -50,13 +51,13 @@ FOREIGN KEY (emp_no) REFERENCES employees(emp_no)
 CREATE TABLE dept_manager (
 dept_no VARCHAR(20),
 emp_no int,
+PRIMARY KEY(emp_no,dept_no),
 FOREIGN KEY (dept_no) REFERENCES departments(dept_no),
 FOREIGN KEY (emp_no) REFERENCES employees(emp_no)
 );
 
-
 CREATE TABLE salaries (
-emp_no int,
+emp_no int PRIMARY KEY,
 salary int,
 FOREIGN KEY (emp_no) REFERENCES employees(emp_no)
 );
