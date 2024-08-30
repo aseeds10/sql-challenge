@@ -33,7 +33,7 @@ JOIN departments ON departments.dept_no = dept_manager.dept_no
 JOIN employees ON dept_manager.emp_no = employees.emp_no 
 	WHERE employees.emp_no IN
 	(SELECT emp_no 
-		FROM dept_manager)
+		FROM dept_manager);
 
 --4. List the department number for each employee along with 
 --that employee’s employee number,last name, first name, and department name
@@ -45,9 +45,15 @@ JOIN departments ON departments.dept_no = dept_emp.dept_no
 JOIN employees ON dept_emp.emp_no = employees.emp_no 
 	WHERE employees.emp_no IN
 	(SELECT emp_no 
-		FROM dept_emp)
+		FROM dept_emp);
 
 
 --5. List first name, last name, and sex of each employee whose 
 --first name is Hercules and whose last name begins with the letter B.
+SELECT first_name, last_name, sex
+FROM employees
+WHERE first_name = 'Hercules' AND last_name LIKE 'B%';
+
+--6. List each employee in the Sales department, including their employee 
+--number, last name, and first name.
 
