@@ -6,7 +6,7 @@ SELECT * FROM employees;
 SELECT * FROM salaries;
 SELECT * FROM titles;
 
---List the employee number, last name, first name, sex, 
+--1. List the employee number, last name, first name, sex, 
 --and salary of each employee.
 SELECT employees.emp_no, 
 	employees.last_name, 
@@ -17,17 +17,29 @@ FROM employees
 INNER JOIN salaries ON
 employees.emp_no = salaries.emp_no;
 
---List the first name, last name, 
+--2. List the first name, last name, 
 --and hire date for the employees who were hired in 1986.
 SELECT first_name, last_name, hire_date
 FROM employees
 WHERE EXTRACT(year FROM hire_date) = 1986;
 
---List the manager of each department along with their department number, 
+--3. List the manager of each department along with their department number, 
 --department name, employee number, last name, and first name.
---query1
+--join dept_manager and departments
+SELECT dept_manager.emp_no, employees.last_name, 
+	employees.first_name, dept_manager.dept_no, 
+	departments.dept_name
+FROM dept_manager
+JOIN departments ON departments.dept_no = dept_manager.dept_no
+JOIN employees ON dept_manager.emp_no = employees.emp_no 
+	WHERE employees.emp_no IN
+	(SELECT emp_no 
+		FROM dept_manager)
 
---UNION (ALL?)
---query2
+--4. List the department number for each employee along with 
+--that employee’s employee number,last name, first name, and department name
+
+
+
 
 
