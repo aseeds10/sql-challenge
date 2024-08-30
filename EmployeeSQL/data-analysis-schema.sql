@@ -69,7 +69,7 @@ WHERE emp_no IN
 	(SELECT dept_name
 	FROM departments
 	WHERE dept_name='Sales')))
-UNION ALL
+UNION ALL --comment out here and below if want non-managers
 SELECT employees.emp_no, employees.first_name, employees.last_name
 FROM employees
 WHERE emp_no IN
@@ -81,7 +81,23 @@ WHERE emp_no IN
 	WHERE dept_name IN
 	(SELECT dept_name
 	FROM departments
-	WHERE dept_name='Sales')))
+	WHERE dept_name='Sales')));
 
 --7. List each employee in the Sales and Development departments, including 
 --their employee number, last name, first name, and department name.
+--NOTE: had difficulty trying to incorporate managers's info
+SELECT employees.emp_no, employees.first_name, employees.last_name, 
+	departments.dept_name
+FROM employees
+JOIN dept_emp ON employees.emp_no = dept_emp.emp_no
+--JOIN dept_manager ON employees.emp_no = dept_manager.emp_no
+JOIN departments ON dept_emp.dept_no = departments.dept_no
+WHERE departments.dept_name IN ('Sales', 'Development');
+
+--8. List the frequency counts, in descending order, of all the employee 
+--last names (that is, how many employees share each last name).
+SELECT last_name, COUNT(last_name) AS frequency
+FROM employees
+GROUP BY last_name
+ORDER BY frequency DESC;
+
